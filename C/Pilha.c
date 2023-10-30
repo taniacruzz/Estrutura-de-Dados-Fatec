@@ -12,6 +12,13 @@ typedef struct Celula {
     struct Celula* seg;
 } Celula;
 
+Celula* criarPilhaSemCabeca (int count){
+    Celula* newSeg = malloc(sizeof(Celula));
+    newSeg->conteudo = rand() % 10;
+    if (count == 1) {return newSeg}
+    else if (count > 1) {criarPilha(count -1)->seg = newSeg;}
+}
+
 
 //***Funções para criação e impressão da lista encadeada***
 
