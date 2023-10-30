@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// criar estrutura de pila
+typedef struct Pilha {
+    struct Celula* topo;
+} Pilha;
+
 // criar estrutura de celula
 typedef struct Celula {
     int conteudo;
