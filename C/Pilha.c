@@ -12,28 +12,59 @@ typedef struct Celula {
     struct Celula* seg;
 } Celula;
 
-Celula* criarPilhaSemCabeca (int count){
+Celula* criarPilhaSemCabeca (int numCel, int count){
     Celula* newSeg = malloc(sizeof(Celula));
     newSeg->conteudo = rand() % 10;
-    if (count == 1) {return newSeg}
-    else if (count > 1) {criarPilha(count -1)->seg = newSeg;}
+    if (count == 1) {newSeg->seg = NULL;}
+    if (numCel == 1) {
+        return newSeg;}
+    else if (numCel > 1) {
+        Celula* anterior = criarPilhaSemCabeca(numCel - 1, count + 1);
+        anterior->seg = newSeg;
+        return anterior;
+    }
+}
+
+// Celula* criarPilhaSemCabeca (int count) {
+//     Celula* newSeg = malloc(sizeof(Celula));
+//     newSeg->conteudo = rand() % 10;
+//     newSeg->seg = NULL;
+//     while (count > 1){
+//         Celula* newSeg_anterior = malloc(sizeof(Celula));
+//         newSeg_anterior->conteudo = rand() % 10;
+//         newSeg_anterior->seg = NULL;
+//     }
+// }
+
+Pilha* criarPilhaComCabeca () {
+    Pilha* pPilha = (Pilha*)malloc(sizeof(Pilha));
+    pPilha->topo = NULL;
+    return pPilha;
+}
+
+void inserirCelulaPilha (Pilha* pPilha) {
+    Celula* newSeg = malloc(sizeof(Celula));
+    newSeg->conteudo = rand() % 10;
+    newSeg->seg = pPilha-> topo;
+    pPilha->topo = newSeg;
 }
 
 
 //***Funções para criação e impressão da lista encadeada***
 
-Celula* criarListaEncadeada (int count) {
-    if(count == 0) {return NULL;}
-    Celula* newSeg = malloc(sizeof(Celula));
-    newSeg->conteudo = rand() % 10;
-    if (count == 1) {newSeg->seg = NULL;}
-    if (count > 1) {
-        newSeg->seg = criarListaEncadeada(count - 1);}
-    return newSeg;
-}
+// Celula* criarListaEncadeada (int count) {
+//     if(count == 0) {return NULL;}
+//     Celula* newSeg = malloc(sizeof(Celula));
+//     newSeg->conteudo = rand() % 10;
+//     if (count == 1) {newSeg->seg = NULL;}
+//     if (count > 1) {
+//         newSeg->seg = criarListaEncadeada(count - 1);}
+//     return newSeg;
+// }
 
 void imprimirConteudoLista (Celula* lst) {
     if(lst->seg != NULL) {
+        printf("teste");
         printf("%d, ", lst->conteudo);
         imprimirConteudoLista(lst->seg);
     } else if(lst->seg == NULL) {
@@ -65,7 +96,7 @@ void insertInicioPilhaSemCabeca (Celula** pP) {
 
 int main() {
     printf("Criacao de Pilha composta por lista encadeada com 7 celulas: \n");
-    Celula* p = criarListaEncadeada(7);
+    Celula* p = criarPilhaSemCabeca(9, 1);
     printf("Endereco do inicio da Pilha: %p\n", p);
 
     printf("Conteudos da lista encadeada que faz parte da Pilha: \n");
