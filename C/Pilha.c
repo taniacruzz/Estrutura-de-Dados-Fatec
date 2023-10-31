@@ -12,18 +12,34 @@ typedef struct Celula {
     struct Celula* seg;
 } Celula;
 
-Celula* criarPilhaSemCabeca (int numCel, int count){
+Celula* criarPilhaSemCabeca(Celula** pTopo, int numCelulas, int cont) {
     Celula* newSeg = malloc(sizeof(Celula));
     newSeg->conteudo = rand() % 10;
-    if (count == 1) {newSeg->seg = NULL;}
-    if (numCel == 1) {
-        return newSeg;}
-    else if (numCel > 1) {
-        Celula* anterior = criarPilhaSemCabeca(numCel - 1, count + 1);
-        anterior->seg = newSeg;
-        return anterior;
+    if (cont == 1){ 
+        newSeg->seg = NULL;
+        *pTopo = newSeg;}
+        
+    if (numCelulas > 1) {
+        criarPilhaSemCabeca(pTopo, numCelulas - 1, cont + 1)->seg = newSeg;
+        *pTopo = newSeg;
+    return newSeg;
+
     }
+
 }
+
+// Celula* criarPilhaSemCabeca (int numCel, int count){
+//     Celula* newSeg = malloc(sizeof(Celula));
+//     newSeg->conteudo = rand() % 10;
+//     if (count == 1) {newSeg->seg = NULL;}
+//     if (numCel == 1) {
+//         return newSeg;}
+//     else if (numCel > 1) {
+//         Celula* anterior = criarPilhaSemCabeca(numCel - 1, count + 1);
+//         anterior->seg = newSeg;
+//         return anterior;
+//     }
+// }
 
 // Celula* criarPilhaSemCabeca (int count) {
 //     Celula* newSeg = malloc(sizeof(Celula));
@@ -95,8 +111,9 @@ void insertInicioPilhaSemCabeca (Celula** pP) {
 }
 
 int main() {
+    Celula* topo = malloc(sizeof(Celula));
     printf("Criacao de Pilha composta por lista encadeada com 7 celulas: \n");
-    Celula* p = criarPilhaSemCabeca(9, 1);
+    Celula* p = criarPilhaSemCabeca(&topo, 9, 1);
     printf("Endereco do inicio da Pilha: %p\n", p);
 
     printf("Conteudos da lista encadeada que faz parte da Pilha: \n");
