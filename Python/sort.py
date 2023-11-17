@@ -1,3 +1,4 @@
+# melhor caso: quando estiver já em ordem
 def selecao(lista):
     for j in range(len(lista)-1, -1, -1):
         posicao = j
