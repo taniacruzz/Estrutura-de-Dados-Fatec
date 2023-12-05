@@ -3,10 +3,13 @@ package Sort;
 public class QuickSort{
 
     
+    
+    
     public void doQuickSort (int[] num, int j, int positionPivot ) {
         int i = j - 1;       
         int reserv;
         int pivot = num[positionPivot];
+        // fazer função por fora que faça isso aqui:
         while (j <= positionPivot) {
             if (num[j] <= pivot) {
                 ++i;

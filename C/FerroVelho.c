@@ -29,6 +29,11 @@ void insertCar (Car* p, CarPile* pPile) {
     pPile->topCar = p;
 }
 
+void populatePile(CarPile* p_Pile, int nCars, int baseWeight) {
+    insertCar(createCar(baseWeight), p_Pile);
+    if (nCars>1) {populatePile(p_Pile, nCars-1, baseWeight - 2);}
+}
+
 void deleteCar (CarPile* pPile) {
     Car* p_reserva = pPile->topCar;
     pPile->topCar = pPile->topCar->baseCar;
@@ -50,18 +55,14 @@ void moveCar(CarPile* p_origin, CarPile* p_destiny) {
     insertCar(p_removedCar, p_destiny);
 }
 
-void populatePile(CarPile* p_Pile, int nCars, int baseWeight) {
-    insertCar(createCar(baseWeight), p_Pile);
-    if (nCars>1) {populatePile(p_Pile, nCars-1, baseWeight - 2);}
-}
 
-void printPile(Car* p_car) {
-    if (p_car == NULL) {printf(" |______| \n");}
-    else if (p_car->baseCar != NULL) {
-        printf(" |__%d__| \n", p_car->weight);
-        printPile(p_car->baseCar);
+void printPile(Car* p_topCar) {
+    if (p_topCar == NULL) {printf(" |______| \n");}
+    else if (p_topCar->baseCar != NULL) {
+        printf(" |__%d__| \n", p_topCar->weight);
+        printPile(p_topCar->baseCar);
     } else {
-        printf(" |__%d__| \n", p_car->weight);
+        printf(" |__%d__| \n", p_topCar->weight);
     }
 }
 
