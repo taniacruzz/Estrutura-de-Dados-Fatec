@@ -77,12 +77,9 @@ Node* deleteRoot(Node* root) {
     }
     if (p!=root) {
         p->left = q->right;
-    }
-    else {
-        p->right = q->right;
+        q->right = root->right;
     }
     q->left = root->left;
-    q->right = root->right;
    }
    free (root);
    return q;
