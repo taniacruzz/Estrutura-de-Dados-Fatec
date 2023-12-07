@@ -58,30 +58,38 @@ Node* searchMininum(Node* p) {
 
 
 
-void deleteNode(Node** p_nodeToDelete) {
-    if ((*p_nodeToDelete)->left == NULL) {
-        Node* p_reserva = *p_nodeToDelete;
-        (*p_nodeToDelete) = (*p_nodeToDelete)->right;
-        free ((p_reserva));
+Node* deleteRoot(Node* root) {
+   Node* p;
+   Node* q;
+   // também pega a situação em que só há um nódulo
+   if (root->right == NULL) {
+    q = root->left;
+   }
+   else if (root->left == NULL) {
+    q = root->right;
+   }
+   else {
+    q = root->right;
+    p = root;
+    while (q->left != NULL) {
+        q = q->left;
+        p = q;
     }
-    else if ((*p_nodeToDelete)->right == NULL) {
-        Node* p_reserva = *p_nodeToDelete;
-        (*p_nodeToDelete) = (*p_nodeToDelete)->left;
-        free((p_reserva));
-        
+    if (p!=root) {
+        p->left = q->right;
     }
     else {
-        Node** p_minimum = (Node**)malloc(sizeof(Node*));
-        (*p_minimum) = searchMininum((*p_nodeToDelete)->right);
-        
-        (*p_nodeToDelete)->value = (*p_minimum)->value;
-        Node* p_reserva = *p_minimum;
-        (*p_minimum) = (*p_minimum)->right;
-        free(p_reserva);
+        p->right = q->right;
     }
+    q->left = root->left;
+    q->right = root->right;
+   }
+   free (root);
+   return q;
         
-
 }
+
+
 
 void printTree(Node* root) {
     if (root != NULL) {
@@ -109,11 +117,8 @@ int main() {
     printTree(root);
     printf("\n");
 
-    Node* nodeTodelete = (Node*)malloc(sizeof(Node));
-
-    nodeTodelete = search(9, root);
-    deleteNode(&nodeTodelete);
-    printTree(root);
+    Node* new_root = deleteRoot(root);
+    printTree(new_root);
 
 
 
