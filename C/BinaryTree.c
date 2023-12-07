@@ -17,20 +17,26 @@ Node* createNode(int value) {
     return newNode;
 }
 
-void insertNode(Node* node, Node* root) {
-    
+Node* insertNode(Node* node, Node* root) {
+    // caso em que a árvore está vazia
+    if (root == NULL) {
+        return node;
+    }
     if (node->value > root->value) {
+        // aqui eu já considero a possibilidade de não ter filho a direita
         if (root->right == NULL) {
             root->right = node;
         }
         else {insertNode(node, root->right);}
     }
     else {
+        // aqui eu já considero a possibilidade de não ter filho a direita
         if (root->left == NULL) {
             root->left = node;
         }
         else {insertNode(node, root->left);}
     }
+    return root;
 }
 
 Node* search(int valueToFind, Node* root) {
@@ -89,26 +95,25 @@ void printTree(Node* root) {
 
 
 int main() {
-    Node** p_root;
-        
-    int elements[] = {8, 4, 9, 2, 10, 1, 16, 3};
+
+    Node* root = NULL;
+         
+    int elements[] = {8, 4, 5, 10, 2, 9, 3, 11, 1, 16};
     int size = sizeof(elements) / sizeof(elements[0]);
     
     for (int i = 0; i < size; i++) {
-        if (i==0) {*p_root = createNode(elements[i]);}
-        else {
             Node* newNode = createNode(elements[i]);
-            insertNode(newNode, *p_root);
-        }
+            root = insertNode(newNode, root);
     }
 
-    printTree(*p_root);
+    printTree(root);
     printf("\n");
 
     Node* nodeTodelete = (Node*)malloc(sizeof(Node));
-    nodeTodelete = search(9, *p_root);
+
+    nodeTodelete = search(9, root);
     deleteNode(&nodeTodelete);
-    printTree(*p_root);
+    printTree(root);
 
 
 
