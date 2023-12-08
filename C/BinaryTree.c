@@ -30,7 +30,7 @@ Node* insertNode(Node* node, Node* root) {
         else {insertNode(node, root->right);}
     }
     else {
-        // aqui eu já considero a possibilidade de não ter filho a direita
+        // aqui eu já considero a possibilidade de não ter filho a esquerda
         if (root->left == NULL) {
             root->left = node;
         }
@@ -63,23 +63,23 @@ Node* deleteRoot(Node* root) {
    Node* q;
    // também pega a situação em que só há um nódulo
    if (root->right == NULL) {
-    q = root->left;
+        q = root->left;
    }
    else if (root->left == NULL) {
-    q = root->right;
+        q = root->right;
    }
    else {
-    q = root->right;
-    p = root;
-    while (q->left != NULL) {
-        p = q;
-        q = q->left;
-    }
-    if (p!=root) {
-        p->left = q->right;
-        q->right = root->right;
-    }
-    q->left = root->left;
+        q = root->right;
+        p = root;
+        while (q->left != NULL) {
+            p = q;
+            q = q->left;
+        }
+        if (p!=root) {
+            p->left = q->right;
+            q->right = root->right;
+        }
+        q->left = root->left;
    }
    free (root);
    return q;
@@ -87,12 +87,19 @@ Node* deleteRoot(Node* root) {
 }
 
 
-
-void printTree(Node* root) {
+void ERD(Node* root) {
     if (root != NULL) {
-        printTree(root->left);
+        ERD(root->left);
         printf("%d ", root->value);
-        printTree(root->right);
+        ERD(root->right);
+    }
+}
+
+void RED (Node* root) {
+    if (root != NULL) {
+        printf("%d ", root->value);
+        RED (root->left);
+        RED (root->right);
     }
 }
 
@@ -103,7 +110,7 @@ int main() {
 
     Node* root = NULL;
          
-    int elements[] = {8, 4, 5, 10, 2, 9, 3, 11, 1, 16};
+    int elements[] = {8, 4, 5, 10, 2, 3, 1, 11, 16};
     int size = sizeof(elements) / sizeof(elements[0]);
     
     for (int i = 0; i < size; i++) {
@@ -111,12 +118,18 @@ int main() {
             root = insertNode(newNode, root);
     }
 
-    printTree(root);
+    ERD(root);
+    printf("\n");
+    // RED(root);
     printf("\n");
 
     Node* new_root = deleteRoot(root);
-    printTree(new_root);
 
+    ERD(new_root);
+    printf("\n");
+    // RED(new_root);
+    printf("\n");
 
+    
 
 }
